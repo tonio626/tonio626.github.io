@@ -14,7 +14,7 @@
     <img src="profile.jpg" alt="Antonio Iacenda" class="rounded-full w-36 h-36 object-cover shadow-lg border-4 border-white mb-4">
     <h1 class="text-3xl font-bold">Antonio Iacenda</h1>
     <p class="text-lg text-gray-600">Electronic Engineer</p>
-    <p class="text-sm text-gray-500 mb-4">FPGA • Embedded • AI Edge</p>
+    <p class="text-sm text-gray-500 mb-4">FPGA • ASIC • Embedded Systems</p>
     <div class="flex space-x-4 text-2xl text-gray-700 mb-4">
       <a href="https://www.linkedin.com/in/antonio-iacenda-a2a7731ab/" target="_blank" class="hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
       <a href="https://github.com/" target="_blank" class="hover:text-gray-800"><i class="fab fa-github"></i></a>
@@ -26,30 +26,59 @@
     <section id="about" class="max-w-3xl mt-12 text-center">
       <h2 class="text-2xl font-bold mb-2">About Me</h2>
       <p>
-        Sono un ingegnere elettronico con una forte passione per il digital design, l'FPGA e le soluzioni AI edge.
-        Mi piace progettare e fare debugging di circuiti digitali complessi, dal concept alla realizzazione.
+        Sono un laureando magistrale in Ingegneria Elettronica con una grande passione per il Digital Design, orientato sia al mondo FPGA sia ASIC, ambito quest'ultimo che desidero approfondire con entusiasmo.
       </p>
     </section>
 
     <section id="education" class="max-w-3xl mt-12 w-full">
       <h2 class="text-2xl font-bold mb-4">Education</h2>
       <div class="border-l-4 border-teal-500 pl-6 space-y-6">
+  <div class="flex items-center mb-2">
+    <img src="logo_unisa.png" alt="UNISA" class="w-10 h-10 mr-3"/>
+    <h3 class="text-xl font-semibold">Università degli Studi di Salerno</h3>
+  </div>
         <div>
-          <p class="text-sm text-gray-500">2023 – 2025</p>
-          <h3 class="font-semibold">Laurea Magistrale in Ingegneria Elettronica</h3>
-          <p>Politecnico di Bari</p>
+          <p class="text-sm text-gray-500">2023 – oggi</p>
+          <h3 class="font-semibold">Laurea Magistrale LM, Ingegneria Elettronica</h3>
+          <p>Università degli Studi di Salerno</p>
+          <p class="text-sm text-gray-600 italic">Curriculum: Elettronica per l’Informazione, l’Industria e l’Energia</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">2020 – 2023</p>
+          <h3 class="font-semibold">Laurea Triennale, Ingegneria Elettronica</h3>
+          <p>Università degli Studi di Salerno</p>
+          <p class="text-sm text-gray-600">Votazione: 110/110 e Lode</p>
+          <p class="text-sm text-gray-600 italic">Tesi: TINYML per un sistema di monitoraggio del territorio a bordo satellite basato su rete neurale</p>
         </div>
       </div>
     </section>
 
     <section id="projects" class="max-w-4xl mt-12 w-full">
+  <div class="text-right mb-4">
+    <a href="Antonio_Portfolio.pdf" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded shadow">
+      Download PDF Portfolio
+    </a>
+  </div>
       <h2 class="text-2xl font-bold mb-4">Projects</h2>
-      <div class="bg-white p-6 rounded shadow mb-4">
-        <h3 class="font-semibold text-lg mb-2">32-bit Floating-Point Microprocessor on FPGA</h3>
-        <p class="text-sm text-gray-700 mb-2">
-          Design, synthesis and verification of a 32-bit FP μP in SystemVerilog, implemented on Xilinx FPGA.
-        </p>
-        <a href="https://github.com/" target="_blank" class="text-teal-600 hover:underline">View on GitHub →</a>
+      <div class="space-y-6">
+        <div class="bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
+          <h3 class="font-semibold text-lg mb-2">Custom FP32 Microprocessor su FPGA</h3>
+          <p class="text-sm text-gray-700">
+            Progettazione completa di un microprocessore a 32 bit con FPU in SystemVerilog, dotato di ISA custom, FSM di controllo, moltiplicatore Booth iterativo e divisore CORDIC, con attenzione a timing closure e ottimizzazione area.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
+          <h3 class="font-semibold text-lg mb-2">High-Efficiency Synchronous Buck Converter</h3>
+          <p class="text-sm text-gray-700">
+            Convertitore buck sincrono 36V → 3.3V @ 10A, progettato con analisi termica, selezione componenti e filtro EMI dual-stage. Efficienza >90%, frequenza 431 kHz, ripple <10 mV.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
+          <h3 class="font-semibold text-lg mb-2">TinyML for Satellite Applications</h3>
+          <p class="text-sm text-gray-700">
+            CNN quantizzata a 8 bit per immagini satellitari EuroSAT, con accuracy 92.02%, deploy su STM32H743 (83.82 KiB RAM, 81.01 KiB FLASH, 44 mJ/inferenza).
+          </p>
+        </div>
       </div>
     </section>
 
