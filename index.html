@@ -54,34 +54,34 @@
           <h3 class="font-semibold" data-i18n="bsc_title">Laurea Triennale, Ingegneria Elettronica</h3>
           <p>Università degli Studi di Salerno</p>
           <p class="text-sm text-gray-600">Votazione: 110/110 e Lode</p>
-          <p class="text-sm text-gray-600 italic" data-i18n="bsc_thesis">Tesi: TINYML per un sistema di monitoraggio del territorio a bordo satellite basato su rete neurale</p>
+          <p class="text-sm text-gray-600 italic" data-i18n="bsc_thesis">
+            Tesi: TinyML per un sistema di monitoraggio del territorio a bordo satellite basato su rete neurale
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Projects Section: cliccabili -->
     <section id="projects" class="max-w-4xl mt-12 w-full">
       <h2 class="text-2xl font-bold mb-4" data-i18n="projects_title">Projects</h2>
       <div class="space-y-6">
-
-        <!-- Progetto 1 -->
         <a href="microprocessor.html" class="block bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
           <h3 class="font-semibold text-lg mb-2" data-i18n="proj1_title">Custom FP32 Microprocessor su FPGA</h3>
-          <p class="text-sm text-gray-700" data-i18n="proj1_desc">Progettazione completa di un microprocessore a 32 bit con FPU in SystemVerilog, dotato di ISA custom, FSM di controllo, moltiplicatore Booth iterativo e divisore CORDIC, con attenzione a timing closure e ottimizzazione area.</p>
+          <p class="text-sm text-gray-700" data-i18n="proj1_desc">
+            Progettazione completa di un microprocessore a 32 bit con FPU in SystemVerilog, dotato di ISA custom, FSM di controllo, moltiplicatore Booth iterativo e divisore CORDIC, con attenzione a timing closure e ottimizzazione area.
+          </p>
         </a>
-
-        <!-- Progetto 2 -->
         <a href="projects/buck_converter.html" class="block bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
           <h3 class="font-semibold text-lg mb-2" data-i18n="proj2_title">High-Efficiency Synchronous Buck Converter</h3>
-          <p class="text-sm text-gray-700" data-i18n="proj2_desc">Convertitore buck sincrono 36V → 3.3V @ 10A, progettato con analisi termica, selezione componenti e filtro EMI dual-stage. Efficienza >90%, frequenza 431 kHz, ripple &lt;10 mV.</p>
+          <p class="text-sm text-gray-700" data-i18n="proj2_desc">
+            Convertitore buck sincrono 36V → 3.3V @ 10A, progettato con analisi termica, selezione componenti e filtro EMI dual-stage. Efficienza >90%, frequenza 431 kHz, ripple &lt;10 mV.
+          </p>
         </a>
-
-        <!-- Progetto 3 -->
         <a href="projects/tinyml_satellite.html" class="block bg-white p-6 rounded shadow transform transition duration-300 hover:scale-105 hover:shadow-lg">
           <h3 class="font-semibold text-lg mb-2" data-i18n="proj3_title">TinyML for Satellite Applications</h3>
-          <p class="text-sm text-gray-700" data-i18n="proj3_desc">CNN quantizzata a 8 bit per immagini satellitari EuroSAT, con accuracy 92.02%, deploy su STM32H743 (83.82 KiB RAM, 81.01 KiB FLASH, 44 mJ/inferenza).</p>
+          <p class="text-sm text-gray-700" data-i18n="proj3_desc">
+            CNN quantizzata a 8 bit per immagini satellitari EuroSAT, con accuracy 92.02%, deploy su STM32H743 (83.82 KiB RAM, 81.01 KiB FLASH, 44 mJ/inferenza).
+          </p>
         </a>
-
       </div>
     </section>
 
@@ -97,7 +97,6 @@
   </div>
 
   <script>
-    // 1) Definisci qui tutte le stringhe in inglese
     const translations = {
       en: {
         page_title:         "Antonio Iacenda | Portfolio",
@@ -108,7 +107,7 @@
         msc_title:          "M.Sc., Electronic Engineering",
         msc_curriculum:     "Curriculum: Electronics for Information, Industry and Energy",
         bsc_title:          "B.Sc., Electronic Engineering",
-        bsc_thesis:         "Thesis: TinyML for an onboard satellite territory monitoring system based on neural network",
+        bsc_thesis:         "Thesis: TinyML for an onboard satellite landscape monitoring system based on neural network",
         projects_title:     "Projects",
         proj1_title:        "Custom FP32 Microprocessor on FPGA",
         proj1_desc:         "Full design of a 32-bit microprocessor with FPU in SystemVerilog, featuring a custom ISA, control FSM, iterative Booth multiplier and CORDIC divider, optimized for timing closure and area.",
@@ -120,35 +119,47 @@
         contact_text:       "Let’s connect for a project collaboration or job opportunity.",
         contact_btn:        "Write to me",
         footer_text:        "All rights reserved."
-      }
+      },
+      it: {} // i testi italiani sono già scritti nel DOM
     };
 
-    // 2) Funzione che mappa tutti gli elementi con data-i18n
     function translatePage(lang) {
-      // testi inline
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
+        if (lang !== 'it' && translations[lang][key]) {
           el.innerText = translations[lang][key];
+        } else if (lang === 'it') {
+          el.innerText = el.getAttribute('data-original') || el.innerText;
         }
       });
-      // titolo della pagina (<title data-i18n-title="...">)
+
       const titleEl = document.querySelector('title');
       const titleKey = titleEl.getAttribute('data-i18n-title');
-      if (translations[lang][titleKey]) {
+      if (lang !== 'it' && translations[lang][titleKey]) {
         document.title = translations[lang][titleKey];
+      } else if (lang === 'it') {
+        document.title = titleEl.getAttribute('data-original') || titleEl.innerText;
       }
     }
 
-    // 3) Listener sul selettore lingua
-    const selector = document.getElementById('languageSelector');
-    selector.addEventListener('change', () => {
-      translatePage(selector.value);
+    window.addEventListener('DOMContentLoaded', () => {
+      // Salvo il testo originale (italiano)
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.setAttribute('data-original', el.innerText);
+      });
+      const titleEl = document.querySelector('title');
+      titleEl.setAttribute('data-original', titleEl.innerText);
+
+      // Ripristino lingua salvata o fallback a "it"
+      const savedLang = localStorage.getItem('preferredLang') || 'it';
+      document.getElementById('languageSelector').value = savedLang;
+      translatePage(savedLang);
     });
 
-    // 4) All’avvio, applica la lingua di default
-    window.addEventListener('DOMContentLoaded', () => {
-      translatePage(selector.value);
+    document.getElementById('languageSelector').addEventListener('change', e => {
+      const lang = e.target.value;
+      localStorage.setItem('preferredLang', lang);
+      translatePage(lang);
     });
   </script>
 </body>
