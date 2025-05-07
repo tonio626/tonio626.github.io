@@ -3,134 +3,299 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Custom FP32 Microprocessor on FPGA | Antonio Iacenda</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <title data-i18n-title="page_title">Custom FP32 Microprocessor on FPGA | Antonio Iacenda</title>
+
+  <!-- Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+
+  <!-- Animazioni -->
   <style>
     html { scroll-behavior: smooth; }
-    /* Fade-in Up */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0);    }
-    }
-    /* Slide in from Left */
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to   { opacity: 1; transform: translateX(0);     }
-    }
-    /* Slide in from Right */
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to   { opacity: 1; transform: translateX(0);    }
-    }
-    .fade-in { opacity: 0; animation: fadeInUp 1s ease-out forwards; }
-    .slide-in-left  { opacity: 0; animation: slideInLeft 1s ease-out forwards; }
-    .slide-in-right { opacity: 0; animation: slideInRight 1s ease-out forwards; }
-    /* Delay helpers */
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
-    .delay-400 { animation-delay: 0.4s; }
-    .delay-500 { animation-delay: 0.5s; }
+    @keyframes fadeInUp   { from {opacity:0;transform:translateY(40px);} to {opacity:1;transform:translateY(0);} }
+    @keyframes slideInLeft{ from {opacity:0;transform:translateX(-50px);}to {opacity:1;transform:translateX(0);} }
+    @keyframes slideInRight{from {opacity:0;transform:translateX(50px);} to {opacity:1;transform:translateX(0);} }
+    .fade-in{opacity:0;animation:fadeInUp 1s ease-out forwards;}
+    .slide-in-left{opacity:0;animation:slideInLeft 1s ease-out forwards;}
+    .slide-in-right{opacity:0;animation:slideInRight 1s ease-out forwards;}
+    .delay-100{animation-delay:.1s}.delay-200{animation-delay:.2s}.delay-300{animation-delay:.3s}
+    .delay-400{animation-delay:.4s}.delay-500{animation-delay:.5s}
   </style>
 </head>
 <body class="antialiased text-gray-900 bg-white">
 
-  <!-- Back Button -->
-  <div class="absolute top-5 left-5 z-10">
-    <a href="../index.html" class="text-teal-600 hover:text-teal-800 font-semibold text-sm">&larr; Back to Portfolio</a>
+  <!-- Lingua -->
+  <div class="absolute top-4 right-4 z-20">
+    <select id="languageSelector" class="p-2 rounded border border-gray-300">
+      <option value="en">🇬🇧 English</option>
+      <option value="it">🇮🇹 Italiano</option>
+    </select>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Back Button -->
+  <div class="absolute top-5 left-5 z-10">
+    <a href="../index.html" class="text-teal-600 hover:text-teal-800 font-semibold text-sm"
+       data-i18n="← back_portfolio">&larr; Back to Portfolio</a>
+  </div>
+
+  <!-- Hero -->
   <section class="h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-br from-gray-100 to-white">
-    <h1 class="text-5xl font-extrabold mb-4 fade-in delay-200">Custom 32-bit Microprocessor<br/><span class="text-teal-600">with FP ALU on FPGA</span></h1>
-    <p class="max-w-2xl text-lg text-gray-700 fade-in delay-400">
+    <h1 class="text-5xl font-extrabold mb-4 fade-in delay-200" data-i18n="hero_h1">
+      Custom 32-bit Microprocessor<br/><span class="text-teal-600">with FP ALU on FPGA</span>
+    </h1>
+    <p class="max-w-2xl text-lg text-gray-700 fade-in delay-400" data-i18n="hero_sub">
       A ground-up design executing IEEE-754 floating-point operations via a custom ISA, pipelined datapath, and optimized computational modules. Synthesized and deployed on a CMOD A7-35T FPGA for real-time performance analysis.
     </p>
   </section>
 
-  <!-- Section 1: Architecture Overview -->
+  <!-- Architecture -->
   <section id="architecture" class="py-20 px-6 bg-gray-50">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-      <img src="arch_overview.png" alt="Architecture Overview"
-           class="rounded-lg shadow-lg slide-in-left delay-200">
+      <img src="arch_overview.png" alt="Architecture Overview" class="rounded-lg shadow-lg slide-in-left delay-200">
       <div class="slide-in-right delay-400">
-        <h2 class="text-3xl font-bold mb-4">High-Level Architecture</h2>
-        <p class="text-gray-700">
+        <h2 class="text-3xl font-bold mb-4" data-i18n="arch_title">High-Level Architecture</h2>
+        <p class="text-gray-700" data-i18n="arch_par">
           This design employs a Load/Store structure with dual-ported BRAM enabling single-cycle instruction/data fetch. Central to the datapath is a 32-bit ALU handling FP32 operations, coordinated by an FSM-based Control Unit.
         </p>
-        <ul class="list-disc pl-6 mt-4 text-gray-700">
-          <li>32-bit Program Counter with dynamic branching and PC increment</li>
-          <li>Control Unit FSM issuing LOAD, EXECUTE, and WRITE signals</li>
-          <li>Zero flag logic for conditional BEQ operations</li>
-          <li>Dedicated DONE flags for multiplier/divider completion</li>
-        </ul>
       </div>
     </div>
   </section>
 
-  <!-- Section 2: ISA -->
+  <!-- ISA -->
   <section id="isa" class="py-20 px-6">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-      <div class="slide-in-left delay-200">
-        <h2 class="text-3xl font-bold mb-4">Instruction Set Architecture (ISA)</h2>
-        <p class="text-gray-700">
-          A concise set of 16 opcodes encoded on 32 bits: from immediate FP arithmetic (FADDI, FMULI) to memory accesses (LDA, STORA) and program flow (JMP, BEQ). All decoding is parallel to minimize cycle time.
-        </p>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+
+      <!-- Tabella -->
+      <div class="slide-in-left delay-200 overflow-x-auto">
+        <table class="min-w-full border border-gray-300 shadow-md">
+          <thead class="bg-teal-600 text-white">
+            <tr>
+              <th class="px-4 py-3 text-left border border-white" data-i18n="tab_instr">Instruction</th>
+              <th class="px-4 py-3 text-left border border-white" data-i18n="tab_code">Code&nbsp;(Hex)</th>
+              <th class="px-4 py-3 text-left border border-white" data-i18n="tab_desc">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 text-sm">
+            <tr class="bg-white"><td class="px-4 py-2">LDI</td><td class="px-4 py-2">0x00000001</td><td class="px-4 py-2" data-i18n="desc_ldi"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">FADDI</td><td class="px-4 py-2">0x00000002</td><td class="px-4 py-2" data-i18n="desc_faddi"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">FSUBI</td><td class="px-4 py-2">0x00000003</td><td class="px-4 py-2" data-i18n="desc_fsubi"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">FMULI</td><td class="px-4 py-2">0x00000004</td><td class="px-4 py-2" data-i18n="desc_fmuli"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">FDIVI</td><td class="px-4 py-2">0x00000005</td><td class="px-4 py-2" data-i18n="desc_fdivi"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">ANDI</td><td class="px-4 py-2">0x00000006</td><td class="px-4 py-2" data-i18n="desc_andi"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">ORI</td><td class="px-4 py-2">0x00000007</td><td class="px-4 py-2" data-i18n="desc_ori"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">XORI</td><td class="px-4 py-2">0x00000008</td><td class="px-4 py-2" data-i18n="desc_xori"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">LDA</td><td class="px-4 py-2">0x00000009</td><td class="px-4 py-2" data-i18n="desc_lda"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">STORA</td><td class="px-4 py-2">0x0000000A</td><td class="px-4 py-2" data-i18n="desc_stora"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">FADD</td><td class="px-4 py-2">0x0000000B</td><td class="px-4 py-2" data-i18n="desc_fadd"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">FSUB</td><td class="px-4 py-2">0x0000000C</td><td class="px-4 py-2" data-i18n="desc_fsub"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">FMUL</td><td class="px-4 py-2">0x0000000D</td><td class="px-4 py-2" data-i18n="desc_fmul"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">FDIV</td><td class="px-4 py-2">0x0000000E</td><td class="px-4 py-2" data-i18n="desc_fdiv"></td></tr>
+            <tr class="bg-white"><td class="px-4 py-2">JMP</td><td class="px-4 py-2">0x0000000F</td><td class="px-4 py-2" data-i18n="desc_jmp"></td></tr>
+            <tr class="bg-gray-50"><td class="px-4 py-2">BEQ</td><td class="px-4 py-2">0x00000010</td><td class="px-4 py-2" data-i18n="desc_beq"></td></tr>
+          </tbody>
+        </table>
       </div>
-      <img src="isa_table.png" alt="ISA Table"
-           class="rounded-lg border shadow slide-in-right delay-400">
+
+      <!-- Descrizione -->
+      <div class="slide-in-right delay-400 space-y-4">
+        <h2 class="text-3xl font-bold" data-i18n="isa_over_title">ISA Overview</h2>
+        <p class="text-gray-700" data-i18n="isa_over_p1">
+          This custom instruction set packs 16 distinct 32-bit operations, each encoded with 8 opcode bits and 24 operand/address bits. Full parallel decoding minimises cycle time.
+        </p>
+        <p class="text-gray-700" data-i18n="isa_over_p2">
+          The instructions fall into five functional families:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 space-y-1">
+          <li data-i18n="li_imm"></li>
+          <li data-i18n="li_bit"></li>
+          <li data-i18n="li_mem"></li>
+          <li data-i18n="li_memfp"></li>
+          <li data-i18n="li_ctrl"></li>
+        </ul>
+        <p class="text-gray-700" data-i18n="isa_over_p3"></p>
+      </div>
+
     </div>
   </section>
 
-  <!-- Section 3: Testbench Verification -->
+  <!-- Verification -->
   <section id="verification" class="py-20 px-6 bg-gray-50">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-      <img src="testbench.png" alt="Testbench Verification"
-           class="rounded-lg shadow-lg slide-in-left delay-200">
+      <img src="testbench.png" alt="Testbench Verification" class="rounded-lg shadow-lg slide-in-left delay-200">
       <div class="slide-in-right delay-400">
-        <h2 class="text-3xl font-bold mb-4">Functional Verification</h2>
-        <p class="text-gray-700">
-          We preloaded our BRAM with a representative instruction sequence covering FP add/sub, mul/div, logical ops, and branches. Waveform analysis confirmed correct result propagation, PC updates, and zero-flag behavior across all cycles.
-        </p>
+        <h2 class="text-3xl font-bold mb-4" data-i18n="ver_title">Functional Verification</h2>
+        <p class="text-gray-700" data-i18n="ver_par"></p>
       </div>
     </div>
   </section>
 
-  <!-- Section 4: Debug with ILA -->
+  <!-- Debug -->
   <section id="debug" class="py-20 px-6">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
       <div class="slide-in-left delay-200">
-        <h2 class="text-3xl font-bold mb-4">Live FPGA Debug with ILA</h2>
-        <p class="text-gray-700">
-          Using Xilinx ILA cores, we captured internal signals (clk_ALU, op_code, LoadData, MUL_DONE, DIV_DONE) live on a CMODA7-35T. This real-time visibility was crucial for timing closure and fine-tuning the pipeline.
-        </p>
+        <h2 class="text-3xl font-bold mb-4" data-i18n="dbg_title"></h2>
+        <p class="text-gray-700" data-i18n="dbg_par"></p>
       </div>
-      <img src="ila_debug.png" alt="ILA Debug"
-           class="rounded-lg shadow-lg slide-in-right delay-400">
+      <img src="ila_debug.png" alt="ILA Debug" class="rounded-lg shadow-lg slide-in-right delay-400">
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="py-8 bg-white text-center text-sm text-gray-500">
-    &copy; 2025 Antonio Iacenda — All rights reserved.
+    © 2025 Antonio Iacenda — <span data-i18n="footer"></span>
   </footer>
 
+  <!-- Traduzioni & script -->
   <script>
-    // Scroll-triggered animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
+const translations = {
+  en: {
+    /* META */
+    page_title: "Custom 32-bit Microprocessor with FP32 ALU on FPGA | Antonio Iacenda",
+
+    /* NAV */
+    back_portfolio: "← Back to Portfolio",
+
+    /* HERO */
+    hero_h1: "Custom 32-bit Microprocessor<br/><span class=\"text-teal-600\">with FP32 ALU on FPGA</span>",
+    hero_sub: "32-bit microprocessor designed from scratch, capable of executing IEEE-754 single-precision floating-point arithmetic through a custom Instruction Set Architecture (ISA) with 64-bit-wide instructions, each split across two 32-bit words. A dual-port BRAM enables single-cycle instruction fetch, while Booth and CORDIC units implement floating-point multiplication and division, respectively. The project was synthesized, verified, and successfully deployed on a Digilent Cmod A7-35T board.",
+
+    /* ARCHITECTURE */
+    arch_title: "High-Level Architecture",
+    arch_par: "Load/Store architecture with a 32-bit FP32 ALU and dual-port BRAM with a 32-bit word width. Each instruction is 64 bits wide, split across two consecutive 32-bit memory locations: the first word holds the opcode, while the second can contain either a 32-bit IEEE-754 immediate operand or a memory address from which to load the operand. The Control Unit, implemented as a finite state machine (FSM), handles the fetch, decode, and execute phases, generating the control signals.",
+
+
+    /* ISA TABLE HEADERS */
+    tab_instr: "Instruction",
+    tab_code: "Code (Hex)",
+    tab_desc: "Description",
+
+    /* ISA ROW DESCRIPTIONS */
+    desc_ldi:   "Load FP32 immediate (second word) into ACC",
+    desc_faddi: "ACC ← ACC + FP32 immediate",
+    desc_fsubi: "ACC ← ACC − FP32 immediate",
+    desc_fmuli: "ACC ← ACC × FP32 immediate",
+    desc_fdivi: "ACC ← ACC ÷ FP32 immediate",
+    desc_andi:  "ACC AND immediate (bitwise)",
+    desc_ori:   "ACC OR immediate (bitwise)",
+    desc_xori:  "ACC XOR immediate (bitwise)",
+    desc_lda:   "Load ACC from memory address (second word)",
+    desc_stora: "Store ACC to memory address (second word)",
+    desc_fadd:  "ACC ← ACC + FP32 value at memory address",
+    desc_fsub:  "ACC ← ACC − FP32 value at memory address",
+    desc_fmul:  "ACC ← ACC × FP32 value at memory address",
+    desc_fdiv:  "ACC ← ACC ÷ FP32 value at memory address",
+    desc_jmp:   "Jump to address (PC ← addr)",
+    desc_beq:   "Jump if ZERO flag is set",
+
+    /* ISA OVERVIEW */
+    isa_over_title: "ISA Overview",
+    isa_over_p1: "The ISA includes 16 instructions organized in a 64-bit format: the first 32-bit word holds the opcode, while the second word contains either an FP32 immediate or a memory address. Parallel fetching enabled by the dual-port BRAM allows both words to be retrieved in a single clock cycle.",
+    isa_over_p2: "The instructions are grouped into five categories:",
+    li_imm:  "<strong>FP32 Immediates:</strong> LDI, FADDI, FSUBI, FMULI, and FDIVI operate on a constant in the second word and the ACC.",
+    li_bit:  "<strong>Bitwise Operations:</strong> ANDI, ORI, XORI perform logical operations between the ACC and constants.",
+    li_mem:  "<strong>Memory Access:</strong> LDA and STORA use the dual-port BRAM.",
+    li_memfp:"<strong>FP32 with Memory Access:</strong> FADD, FSUB, FMUL, and FDIV operate on data loaded from RAM.",
+    li_ctrl: "<strong>Control Flow:</strong> JMP is an unconditional jump; BEQ jumps only if the ZERO flag is set.",
+
+
+
+
+    /* VERIFICATION & DEBUG */
+    ver_title: "Functional Verification",
+    ver_par: "To verify the correct operation of the microprocessor, the BRAM was preloaded with a mixed sequence of instructions: immediate, memory-access, and conditional or unconditional jumps. The waveform analysis confirms the correct update of the accumulator (ACC), proper flag generation, and the expected program flow.",
+    dbg_title: "On-chip Debug via Xilinx ILA",
+    dbg_par: "For internal monitoring of the microprocessor implemented on FPGA, the Integrated Logic Analyzer (ILA) tool provided by Xilinx was used. Several critical internal signals were sampled at 32 MHz, including the accumulator register (ACC), the instruction register (OP), the MUL_DONE and DIV_DONE signals, and various control signals generated by the Control Unit. All debug signals were protected from synthesis optimization using the <code>dont_touch</code> directive, allowing them to remain observable after implementation without assigning them to physical I/O pins. This approach enabled an in-depth analysis during actual operation on the FPGA, verifying the correct execution of instructions, the update of the ACC register, and the handling of completion signals in complex arithmetic modules.",
+
+    /* FOOTER */
+    footer: "All rights reserved."
+  },
+
+  it: {
+    /* META */
+    page_title: "Microprocessore custom 32 bit con ALU FP32 su FPGA | Antonio Iacenda",
+
+    /* NAV */
+    back_portfolio: "← Torna al Portfolio",
+
+    /* HERO */
+    hero_h1: "Microprocessore custom a 32 bit<br/><span class=\"text-teal-600\">con ALU FP32 su FPGA</span>",
+    hero_sub: "Microprocessore a 32 bit progettato da zero, in grado di eseguire operazioni in virgola mobile IEEE-754 in singola precisione tramite un'ISA personalizzata con istruzioni larghe 64 bit, ciascuna suddivisa in due word da 32 bit. Una BRAM dual-port consente il fetch delle istruzioni in un solo ciclo, mentre le unità Booth e CORDIC implementano rispettivamente la moltiplicazione e la divisione in floating-point. Il progetto è stato sintetizzato, verificato e correttamente messo in funzione su una scheda Digilent Cmod A7-35T.",
+
+    /* ARCHITETTURA */
+    arch_title: "Architettura di alto livello",
+    arch_par: "Architettura di tipo Load/Store con ALU FP32 a 32 bit e memoria BRAM dual-port a larghezza di parola pari a 32 bit. Ogni istruzione è composta da 64 bit, suddivisi in due word consecutive da 32 bit memorizzate in locazioni di memoria adiacenti: la prima word contiene l'opcode, mentre la seconda può contenere un operando immediato IEEE-754 a 32 bit oppure un indirizzo di una locazione di memoria da cui caricare l'operando. La Control Unit, implementata tramite una macchina a stati finiti (FSM), scandisce le fasi fetch, decode ed execute, generando i segnali di controllo.",
+
+    /* ISA TABLE HEADERS */
+    tab_instr: "Istruzione",
+    tab_code: "Codice (Hex)",
+    tab_desc: "Significato",
+
+    /* DESCRIZIONI RIGHE ISA */
+    desc_ldi:   "Carica in ACC un immediato FP32 (seconda word)",
+    desc_faddi: "ACC ← ACC + immediato FP32",
+    desc_fsubi: "ACC ← ACC − immediato FP32",
+    desc_fmuli: "ACC ← ACC × immediato FP32",
+    desc_fdivi: "ACC ← ACC ÷ immediato FP32",
+    desc_andi:  "ACC AND immediato (bitwise)",
+    desc_ori:   "ACC OR immediato (bitwise)",
+    desc_xori:  "ACC XOR immediato (bitwise)",
+    desc_lda:   "Carica in ACC il valore all’indirizzo di memoria (seconda word)",
+    desc_stora: "Scrive ACC all’indirizzo di memoria (seconda word)",
+    desc_fadd:  "ACC ← ACC + valore FP32 in memoria",
+    desc_fsub:  "ACC ← ACC − valore FP32 in memoria",
+    desc_fmul:  "ACC ← ACC × valore FP32 in memoria",
+    desc_fdiv:  "ACC ← ACC ÷ valore FP32 in memoria",
+    desc_jmp:   "Salta all’indirizzo (PC ← addr)",
+    desc_beq:   "Salta se il flag ZERO è attivo",
+
+    /* PANORAMICA ISA */
+    isa_over_title: "Panoramica ISA",
+    isa_over_p1: "L'ISA prevede 16 istruzioni organizzate in un formato a 64 bit: la prima word (32 bit) contiene l'opcode, mentre la seconda word ospita un valore immediato in formato FP32 o un indirizzo di memoria. Il fetch parallelo, reso possibile dalla BRAM dual-port, consente di recuperare entrambe le word in un singolo ciclo di clock.",
+    isa_over_p2: "Le istruzioni si suddividono in cinque categorie:",
+    li_imm:  "<strong>Immediati FP32:</strong> LDI, FADDI, FSUBI, FMULI, FDIVI operano su una costante contenuta nella seconda word e sull'ACC.",
+    li_bit:  "<strong>Operazioni bitwise:</strong> ANDI, ORI, XORI eseguono operazioni logiche tra ACC e costanti.",
+    li_mem:  "<strong>Accesso alla memoria:</strong> LDA e STORA utilizzano la BRAM dual-port.",
+    li_memfp:"<strong>FP32 con accesso alla memoria:</strong> FADD, FSUB, FMUL, FDIV operano su dati letti dalla RAM.",
+    li_ctrl: "<strong>Controllo di flusso:</strong> JMP è un salto incondizionato; BEQ salta solo se il flag ZERO è attivo.",
+
+
+
+    /* VERIFICA & DEBUG */
+    ver_title: "Verifica funzionale",
+    ver_par: "Per testare il corretto funzionamento del microprocessore, la BRAM è stata precaricata con una sequenza mista di istruzioni: immediate, con accesso alla memoria e con salti condizionati o incondizionati. L’analisi delle waveform conferma il corretto aggiornamento dell’accumulatore (ACC), la corretta generazione dei flag e il regolare flusso del programma.",
+    dbg_title: "Debug on-chip con Xilinx ILA",
+    dbg_par: "Per il monitoraggio interno del microprocessore implementato su FPGA, è stato utilizzato l'Integrated Logic Analyzer (ILA) fornito da Xilinx. Sono stati campionati a 32 MHz diversi segnali interni significativi, tra cui il registro dell'accumulatore (ACC), il registro dell’istruzione OP, i segnali MUL_DONE e DIV_DONE, e vari segnali di controllo generati dalla Control Unit. Tutti i segnali di debug sono stati protetti dall’ottimizzazione del sintetizzatore mediante l’uso della direttiva <code>dont_touch</code>, così da poterli osservare anche post-implementazione senza assegnarli a pin fisici. Questo approccio ha permesso di eseguire un’analisi approfondita durante il funzionamento effettivo sull’FPGA, verificando la corretta esecuzione delle istruzioni, l’aggiornamento dell’ACC, e la gestione dei segnali di completamento nei moduli aritmetici complessi.",
+
+    /* FOOTER */
+    footer: "Tutti i diritti riservati."
+  }
+};
+
+
+    /* traduzione */
+    function translatePage(lang){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k=el.getAttribute('data-i18n');
+        if(translations[lang]&&translations[lang][k]){
+          el.innerHTML = translations[lang][k];
         }
       });
-    }, { threshold: 0.2 });
+      const titleEl=document.querySelector('title');
+      const tKey=titleEl.getAttribute('data-i18n-title');
+      if(translations[lang]&&translations[lang][tKey]){ document.title=translations[lang][tKey]; }
+    }
 
-    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
+    /* listener */
+    const selector=document.getElementById('languageSelector');
+    selector.addEventListener('change',()=>translatePage(selector.value));
+    window.addEventListener('DOMContentLoaded',()=>translatePage(selector.value));
+
+    /* animazioni on-scroll */
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.style.animationPlayState='running';observer.unobserve(e.target);}})
+    },{threshold:0.2});
+    document.querySelectorAll('.fade-in,.slide-in-left,.slide-in-right').forEach(el=>{
+      el.style.animationPlayState='paused';observer.observe(el);
     });
   </script>
-
 </body>
 </html>
