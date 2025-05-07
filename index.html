@@ -96,6 +96,60 @@
     </footer>
   </div>
 
-  <script>/* script invariato */</script>
+  <script>
+    // 1) Definisci qui tutte le stringhe in inglese
+    const translations = {
+      en: {
+        page_title:         "Antonio Iacenda | Portfolio",
+        download_cv:        "Download CV",
+        about_title:        "About Me",
+        about_text:         "I am a Master's degree candidate in Electronic Engineering with a strong passion for Digital Design, focused on both FPGA and ASIC worlds, which I’m eager to explore further.",
+        education_title:    "Education",
+        msc_title:          "M.Sc., Electronic Engineering",
+        msc_curriculum:     "Curriculum: Electronics for Information, Industry and Energy",
+        bsc_title:          "B.Sc., Electronic Engineering",
+        bsc_thesis:         "Thesis: TinyML for an onboard satellite territory monitoring system based on neural network",
+        projects_title:     "Projects",
+        proj1_title:        "Custom FP32 Microprocessor on FPGA",
+        proj1_desc:         "Full design of a 32-bit microprocessor with FPU in SystemVerilog, featuring a custom ISA, control FSM, iterative Booth multiplier and CORDIC divider, optimized for timing closure and area.",
+        proj2_title:        "High-Efficiency Synchronous Buck Converter",
+        proj2_desc:         "36V → 3.3V @ 10A synchronous buck converter, designed with thermal analysis, component selection and dual-stage EMI filter. Efficiency >90%, freq. 431 kHz, ripple <10 mV.",
+        proj3_title:        "TinyML for Satellite Applications",
+        proj3_desc:         "8-bit quantized CNN for EuroSAT imagery, 92.02% accuracy, deployed on STM32H743 (83.82 KiB RAM, 81.01 KiB FLASH, 44 mJ/inference).",
+        contact_title:      "Contact",
+        contact_text:       "Let’s connect for a project collaboration or job opportunity.",
+        contact_btn:        "Write to me",
+        footer_text:        "All rights reserved."
+      }
+    };
+
+    // 2) Funzione che mappa tutti gli elementi con data-i18n
+    function translatePage(lang) {
+      // testi inline
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+      // titolo della pagina (<title data-i18n-title="...">)
+      const titleEl = document.querySelector('title');
+      const titleKey = titleEl.getAttribute('data-i18n-title');
+      if (translations[lang][titleKey]) {
+        document.title = translations[lang][titleKey];
+      }
+    }
+
+    // 3) Listener sul selettore lingua
+    const selector = document.getElementById('languageSelector');
+    selector.addEventListener('change', () => {
+      translatePage(selector.value);
+    });
+
+    // 4) All’avvio, applica la lingua di default
+    window.addEventListener('DOMContentLoaded', () => {
+      translatePage(selector.value);
+    });
+  </script>
 </body>
 </html>
