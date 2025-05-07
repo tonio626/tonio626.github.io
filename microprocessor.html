@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom FP32 Microprocessor on FPGA | Antonio Iacenda</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    /* Fade-in Up */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    /* Slide in from Left */
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to   { opacity: 1; transform: translateX(0);     }
+    }
+    /* Slide in from Right */
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to   { opacity: 1; transform: translateX(0);    }
+    }
+    .fade-in { opacity: 0; animation: fadeInUp 1s ease-out forwards; }
+    .slide-in-left  { opacity: 0; animation: slideInLeft 1s ease-out forwards; }
+    .slide-in-right { opacity: 0; animation: slideInRight 1s ease-out forwards; }
+    /* Delay helpers */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+  </style>
+</head>
+<body class="antialiased text-gray-900 bg-white">
+
+  <!-- Back Button -->
+  <div class="absolute top-5 left-5 z-10">
+    <a href="../index.html" class="text-teal-600 hover:text-teal-800 font-semibold text-sm">&larr; Back to Portfolio</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-br from-gray-100 to-white">
+    <h1 class="text-5xl font-extrabold mb-4 fade-in delay-200">Custom 32-bit Microprocessor<br/><span class="text-teal-600">with FP ALU on FPGA</span></h1>
+    <p class="max-w-2xl text-lg text-gray-700 fade-in delay-400">
+      A ground-up design executing IEEE-754 floating-point operations via a custom ISA, pipelined datapath, and optimized computational modules. Synthesized and deployed on a CMOD A7-35T FPGA for real-time performance analysis.
+    </p>
+  </section>
+
+  <!-- Section 1: Architecture Overview -->
+  <section id="architecture" class="py-20 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <img src="../assets/images/arch_overview.png" alt="Architecture Overview"
+           class="rounded-lg shadow-lg slide-in-left delay-200">
+      <div class="slide-in-right delay-400">
+        <h2 class="text-3xl font-bold mb-4">High-Level Architecture</h2>
+        <p class="text-gray-700">
+          This design employs a Load/Store structure with dual-ported BRAM enabling single-cycle instruction/data fetch. Central to the datapath is a 32-bit ALU handling FP32 operations, coordinated by an FSM-based Control Unit.
+        </p>
+        <ul class="list-disc pl-6 mt-4 text-gray-700">
+          <li>32-bit Program Counter with dynamic branching and PC increment</li>
+          <li>Control Unit FSM issuing LOAD, EXECUTE, and WRITE signals</li>
+          <li>Zero flag logic for conditional BEQ operations</li>
+          <li>Dedicated DONE flags for multiplier/divider completion</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: ISA -->
+  <section id="isa" class="py-20 px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div class="slide-in-left delay-200">
+        <h2 class="text-3xl font-bold mb-4">Instruction Set Architecture (ISA)</h2>
+        <p class="text-gray-700">
+          A concise set of 16 opcodes encoded on 32 bits: from immediate FP arithmetic (FADDI, FMULI) to memory accesses (LDA, STORA) and program flow (JMP, BEQ). All decoding is parallel to minimize cycle time.
+        </p>
+      </div>
+      <img src="../assets/images/isa_table.png" alt="ISA Table"
+           class="rounded-lg border shadow slide-in-right delay-400">
+    </div>
+  </section>
+
+  <!-- Section 3: Testbench Verification -->
+  <section id="verification" class="py-20 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <img src="../assets/images/testbench.png" alt="Testbench Verification"
+           class="rounded-lg shadow-lg slide-in-left delay-200">
+      <div class="slide-in-right delay-400">
+        <h2 class="text-3xl font-bold mb-4">Functional Verification</h2>
+        <p class="text-gray-700">
+          We preloaded our BRAM with a representative instruction sequence covering FP add/sub, mul/div, logical ops, and branches. Waveform analysis confirmed correct result propagation, PC updates, and zero-flag behavior across all cycles.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Debug with ILA -->
+  <section id="debug" class="py-20 px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div class="slide-in-left delay-200">
+        <h2 class="text-3xl font-bold mb-4">Live FPGA Debug with ILA</h2>
+        <p class="text-gray-700">
+          Using Xilinx ILA cores, we captured internal signals (clk_ALU, op_code, LoadData, MUL_DONE, DIV_DONE) live on a CMODA7-35T. This real-time visibility was crucial for timing closure and fine-tuning the pipeline.
+        </p>
+      </div>
+      <img src="../assets/images/ila_debug.png" alt="ILA Debug"
+           class="rounded-lg shadow-lg slide-in-right delay-400">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-white text-center text-sm text-gray-500">
+    &copy; 2025 Antonio Iacenda — All rights reserved.
+  </footer>
+
+  <script>
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
